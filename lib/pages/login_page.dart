@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lihat_lukis/components/my_button.dart';
 import 'package:lihat_lukis/components/my_textfield.dart';
+import 'package:lihat_lukis/components/square_tile.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -32,14 +33,14 @@ class LoginPage extends StatelessWidget {
                   controller: usernameController,
                   hintText: 'username',
                   obscureText: false),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               //
               //
               MyTextField(
                   controller: passwordController,
                   hintText: 'password',
                   obscureText: true),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               //
               //
               Padding(
@@ -82,7 +83,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Divider(
                         thickness: 0.5,
                         color: Colors.grey,
@@ -91,14 +92,43 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
+              const SizedBox(height: 25),
+              //
+              //
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "lib/images/google.png",
-                    height: 72,
-                  )
+                  SquareTile(imagePath: 'lib/images/google.png'),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  SquareTile(imagePath: 'lib/images/google.png')
                 ],
-              )
+              ),
+              const SizedBox(height: 50),
+              //
+              //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Not a member?',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    'Sign up now',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
