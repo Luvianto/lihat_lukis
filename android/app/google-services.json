@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "995451833005",
+    "project_id": "lihatlukis",
+    "storage_bucket": "lihatlukis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995451833005:android:9bfb4889f3dac917b3d424",
+        "android_client_info": {
+          "package_name": "com.example.lihat_lukis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAUqu-f9RSS4m7UNgAZNe6Kq1TgtquvEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
