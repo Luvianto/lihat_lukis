@@ -33,6 +33,14 @@ var karyaList = [
     imageAsset: 'lib/images/Mona-Lisa.jpg',
   ),
   Karya(
+    title: 'Mona Lisa',
+    artist: 'Leonardo Da Vinci',
+    yearMade: '1600',
+    description:
+        "Monalisa adalah lukisan minyak di atas kayu popular yang dibuat oleh Leonardo da Vinci pada abad ke-16. Lukisan ini sering dianggap sebagai salah satu lukisan paling terkenal di dunia dan hanya sedikit karya seni lain yang menjadi pusat perhatian, studi, mitologi, dan parodi. Lukisan ini dimiliki oleh pemerintah Prancis dan dipamerkan di Musée du Louvre di Paris Lukisan setengah badan ini menggambarkan lukisan wanita yang tatapannya menuju pengunjung dengan ekspresi yang sering dideskripsikan sebagai enigmatik atau misterius.",
+    imageAsset: 'lib/images/Mona-Lisa.jpg',
+  ),
+  Karya(
     title: 'The Last Supper',
     artist: 'Leonardo Da Vinci',
     yearMade: '1495-1498',

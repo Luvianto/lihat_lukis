@@ -8,50 +8,32 @@ class KaryaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return GridView.builder(
+      itemCount: karyaList.length,
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (context, index) {
         final Karya karya = karyaList[index];
-        return InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return KaryaDetail(karya: karya);
-            }));
-          },
-          child: Card(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Image.asset(
-                      karya.imageAsset,
-                      height: 150,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(karya.title),
-                        Text(karya.artist),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+        return Container(
+          margin: const EdgeInsets.all(2.0),
+          decoration: BoxDecoration(color: Colors.blue.shade50),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return KaryaDetail(karya: karya);
+              }));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Image.asset(
+                karya.imageAsset,
+                height: double.infinity,
+                fit: BoxFit.fitHeight,
+              ),
             ),
           ),
         );
       },
-      itemCount: karyaList.length,
     );
   }
 }
