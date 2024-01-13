@@ -1,7 +1,12 @@
+// material.dart
 import 'package:flutter/material.dart';
+
+// firebase
 import 'package:firebase_auth/firebase_auth.dart';
+
+// pages
+import 'package:lihat_lukis/auth/login_or_register.dart';
 import 'package:lihat_lukis/pages/home_page.dart';
-import 'package:lihat_lukis/pages/login_page.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -9,13 +14,15 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
+      body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            // Apabila user telah login
             return const HomePage();
           } else {
-            return LoginPage();
+            // Apabila user belum login
+            return const LoginOrRegister();
           }
         },
       ),

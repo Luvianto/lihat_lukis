@@ -1,7 +1,16 @@
-import 'package:lihat_lukis/pages/karya_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import material.dart
 import 'package:flutter/material.dart';
+
+// import library staggered view
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
+//components
+import 'package:lihat_lukis/components/my_drawer.dart';
+import 'package:lihat_lukis/components/my_tile.dart';
+import 'package:lihat_lukis/data/karya_data.dart';
+import 'package:lihat_lukis/models/karya.dart';
 import 'package:lihat_lukis/pages/profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,69 +20,62 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
-  void _navigateBar(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  // sign user out
+  void signOut() {
+    FirebaseAuth.instance.signOut();
   }
 
-  Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
+  //navigate to profile page
+  void goToProfilePage() {
+    //pop menu drawer
+    Navigator.pop(context);
 
-  final List<Widget> _pages = [
-    const HomeContent(),
-    const KaryaPage(),
-    const ProfilePage(),
-  ];
+    //go to profile page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfilePage(),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await signOut();
-            },
-          )
-        ],
-        title: const Text('Lihat Lukis'),
-        backgroundColor: Colors.grey.shade300,
+        centerTitle: true,
+        title: const Text(
+          'L I H A T L U K I S',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.grey.shade900,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: _navigateBar,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.search),
-            label: 'Discover',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOut: signOut,
       ),
-    );
-  }
-}
-
-class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Helow world'),
+      body: GridView.custom(
+        gridDelegate: SliverQuiltedGridDelegate(
+          crossAxisCount: 4,
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 0,
+          repeatPattern: QuiltedGridRepeatPattern.inverted,
+          pattern: [
+            QuiltedGridTile(2, 2),
+            QuiltedGridTile(2, 1),
+            QuiltedGridTile(2, 1),
+          ],
+        ),
+        childrenDelegate: SliverChildBuilderDelegate((context, index) {
+          if (index < karyaList.length) {
+            Karya karya = karyaList[index];
+            return MyTile(
+              varKarya: karya,
+            );
+          }
+        }),
+      ),
     );
   }
 }
