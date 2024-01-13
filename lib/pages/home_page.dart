@@ -1,4 +1,4 @@
-import 'package:lihat_lukis/pages/karya_page_ex.dart';
+import 'package:lihat_lukis/pages/karya_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lihat_lukis/pages/profile_page.dart';
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     const HomeContent(),
-    const KaryaPageEx(),
+    const KaryaPage(),
     const ProfilePage(),
   ];
 
@@ -45,13 +45,22 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.grey.shade300,
       ),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _navigateBar,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Discover'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _navigateBar,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.search),
+            label: 'Discover',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
       ),
     );
