@@ -11,6 +11,7 @@ import 'package:lihat_lukis/data/karya_data.dart';
 import 'package:lihat_lukis/models/karya.dart';
 import 'package:lihat_lukis/pages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lihat_lukis/pages/search_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,6 +39,15 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
+  //navigate to profile page
+  void goToSearchPage() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SearchPage(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +60,12 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.grey.shade900,
         iconTheme: IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: goToSearchPage,
+          ),
+        ],
       ),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
