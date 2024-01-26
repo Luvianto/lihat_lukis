@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:lihat_lukis/components/my_text_box.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -130,14 +130,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
 
                 const SizedBox(height: 50),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
-                  child: Text(
-                    'My Likes',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )
               ],
             );
           } else if (snapshot.hasError) {

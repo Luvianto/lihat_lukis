@@ -3,11 +3,13 @@ import 'package:lihat_lukis/components/my_list_tile.dart';
 
 class MyDrawer extends StatelessWidget {
   final void Function()? onProfileTap;
+  final void Function()? onLikeTap;
   final void Function()? onSignOut;
   const MyDrawer({
     super.key,
     required this.onProfileTap,
     required this.onSignOut,
+    required this.onLikeTap,
   });
 
   @override
@@ -38,6 +40,13 @@ class MyDrawer extends StatelessWidget {
                 icon: Icons.person,
                 text: 'P R O F I L E',
                 onTap: onProfileTap,
+              ),
+
+              //Likes list tile
+              MyListTile(
+                icon: Icons.favorite_outline,
+                text: 'L I K E S',
+                onTap: onLikeTap,
               ),
             ],
           ),

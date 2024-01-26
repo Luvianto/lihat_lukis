@@ -1,9 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lihat_lukis/components/my_divider.dart';
+import 'package:lihat_lukis/components/my_like_button.dart';
 import 'package:lihat_lukis/models/karya.dart';
 
-class KaryaDetail extends StatelessWidget {
+class KaryaDetail extends StatefulWidget {
   const KaryaDetail({Key? key, required this.karya}) : super(key: key);
   final Karya karya;
+
+  @override
+  State<KaryaDetail> createState() => _KaryaDetailState();
+}
+
+class _KaryaDetailState extends State<KaryaDetail> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  bool isLiked = false;
+
+  // if the user email is in the list of likes from karya
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.karya.likes.contains(currentUser.email);
+  }
+
+  // toggle like or dislike
+  void toggleLike() {
+    setState(() {
+      // Toggle the liked status by calling the method on the model
+      widget.karya.toggleLike(currentUser.email);
+      isLiked = !isLiked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +41,7 @@ class KaryaDetail extends StatelessWidget {
           Stack(
             children: [
               Image.asset(
-                karya.imageAsset,
+                widget.karya.imageAsset,
                 width: double.infinity,
                 height: 200,
                 fit: BoxFit.fitWidth,
@@ -45,7 +72,7 @@ class KaryaDetail extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(top: 16.0),
             child: Text(
-              karya.title,
+              widget.karya.title,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -62,7 +89,7 @@ class KaryaDetail extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  karya.artist,
+                  widget.karya.artist,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -70,11 +97,15 @@ class KaryaDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  karya.yearMade,
+                  widget.karya.yearMade,
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
+          ),
+          MyLikeButton(
+            isLiked: isLiked,
+            onTap: toggleLike,
           ),
           //
           const SizedBox(height: 25.0),
@@ -84,50 +115,13 @@ class KaryaDetail extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              karya.description,
+              widget.karya.description,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16.0,
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class MyDivider extends StatelessWidget {
-  final String textBetween;
-  const MyDivider({super.key, required this.textBetween});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(
-              textBetween,
-              style: TextStyle(
-                color: Colors.grey[700],
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey,
-            ),
-          )
         ],
       ),
     );

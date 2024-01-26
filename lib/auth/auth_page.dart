@@ -1,10 +1,9 @@
-// material.dart
 import 'package:flutter/material.dart';
 
-// firebase
+//firebase
 import 'package:firebase_auth/firebase_auth.dart';
 
-// pages
+//pages
 import 'package:lihat_lukis/auth/login_or_register.dart';
 import 'package:lihat_lukis/pages/home_page.dart';
 
