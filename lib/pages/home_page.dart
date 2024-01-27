@@ -89,8 +89,8 @@ class _HomePageState extends State<HomePage> {
       body: GridView.custom(
         gridDelegate: SliverQuiltedGridDelegate(
           crossAxisCount: 4,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
+          mainAxisSpacing: 1,
+          crossAxisSpacing: 1,
           repeatPattern: QuiltedGridRepeatPattern.inverted,
           pattern: [
             QuiltedGridTile(2, 2),

@@ -41,6 +41,9 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
         title: TextFormField(
+          style: const TextStyle(
+            color: Colors.white,
+          ),
           controller: searchController,
           decoration: const InputDecoration(
             labelText: 'Search for a user',
@@ -59,6 +62,7 @@ class _SearchPageState extends State<SearchPage> {
                         .where('username',
                             isGreaterThanOrEqualTo:
                                 searchController.text.toLowerCase())
+                        .orderBy('username')
                         .get(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {

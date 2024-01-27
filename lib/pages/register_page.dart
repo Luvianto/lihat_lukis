@@ -87,81 +87,84 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //logo
-              const Icon(
-                Icons.lock,
-                size: 100,
-              ),
-
-              const SizedBox(height: 50),
-
-              //welcome back message
-              Text(
-                'Lets create an account for you',
-                style: TextStyle(
-                  color: Colors.grey.shade700,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 50),
+                //logo
+                const Icon(
+                  Icons.lock,
+                  size: 100,
                 ),
-              ),
 
-              const SizedBox(height: 25),
+                const SizedBox(height: 50),
 
-              // email textfield
-              MyTextField(
-                controller: emailTextController,
-                hintText: 'Email',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: passwordTextController,
-                hintText: 'password',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: confirmPasswordTextController,
-                hintText: 'Consfirm password',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 20),
-
-              //sign in button
-              MyButton(onTap: signUp, text: 'Sign Up'),
-
-              const SizedBox(height: 20),
-
-              // go to register page
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Already a member?',
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                    ),
+                //welcome back message
+                Text(
+                  'Lets create an account for you',
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
                   ),
-                  const SizedBox(width: 4),
-                  GestureDetector(
-                    onTap: widget.onTap,
-                    child: const Text(
-                      'Login Now',
+                ),
+
+                const SizedBox(height: 25),
+
+                // email textfield
+                MyTextField(
+                  controller: emailTextController,
+                  hintText: 'Email',
+                  obscureText: false,
+                ),
+
+                const SizedBox(height: 10),
+
+                MyTextField(
+                  controller: passwordTextController,
+                  hintText: 'password',
+                  obscureText: true,
+                ),
+
+                const SizedBox(height: 10),
+
+                MyTextField(
+                  controller: confirmPasswordTextController,
+                  hintText: 'Consfirm password',
+                  obscureText: true,
+                ),
+
+                const SizedBox(height: 20),
+
+                //sign in button
+                MyButton(onTap: signUp, text: 'Sign Up'),
+
+                const SizedBox(height: 20),
+
+                // go to register page
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already a member?',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                        color: Colors.grey.shade700,
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text(
+                        'Login Now',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
