@@ -31,21 +31,21 @@ class MyDrawer extends StatelessWidget {
               // Home list tile
               MyListTile(
                 icon: Icons.home,
-                text: 'H O M E',
+                text: 'B E R A N D A',
                 onTap: () => Navigator.pop(context),
               ),
 
               //Profile list tile
               MyListTile(
                 icon: Icons.person,
-                text: 'P R O F I L E',
+                text: 'P R O F I L',
                 onTap: onProfileTap,
               ),
 
               //Likes list tile
               MyListTile(
                 icon: Icons.favorite_outline,
-                text: 'L I K E S',
+                text: 'F A V O R I T',
                 onTap: onLikeTap,
               ),
             ],
@@ -56,7 +56,7 @@ class MyDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 25.0),
             child: MyListTile(
               icon: Icons.logout,
-              text: 'L O G O U T',
+              text: 'K E L U A R',
               onTap: onSignOut,
             ),
           )

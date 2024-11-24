@@ -13,14 +13,23 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
+      body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            // Apabila user telah login
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text(
+                'An error occurred. Please try again later.',
+                style: TextStyle(color: Colors.red, fontSize: 16),
+              ),
+            );
+          } else if (snapshot.hasData) {
             return const HomePage();
           } else {
-            // Apabila user belum login
             return const LoginOrRegister();
           }
         },

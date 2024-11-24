@@ -8,7 +8,6 @@ import 'package:lihat_lukis/components/my_drawer.dart';
 import 'package:lihat_lukis/components/my_tile.dart';
 
 import 'package:lihat_lukis/data/karya_data.dart';
-import 'package:lihat_lukis/models/karya.dart';
 import 'package:lihat_lukis/pages/favourite_page.dart';
 import 'package:lihat_lukis/pages/profile_page.dart';
 import 'package:lihat_lukis/pages/search_page.dart';
@@ -73,10 +72,10 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.grey.shade900,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: goToSearchPage,
           ),
         ],
@@ -86,27 +85,37 @@ class _HomePageState extends State<HomePage> {
         onProfileTap: goToProfilePage,
         onSignOut: signOut,
       ),
-      body: GridView.custom(
-        gridDelegate: SliverQuiltedGridDelegate(
-          crossAxisCount: 4,
-          mainAxisSpacing: 1,
-          crossAxisSpacing: 1,
-          repeatPattern: QuiltedGridRepeatPattern.inverted,
-          pattern: [
-            QuiltedGridTile(2, 2),
-            QuiltedGridTile(2, 1),
-            QuiltedGridTile(2, 1),
-          ],
-        ),
-        childrenDelegate: SliverChildBuilderDelegate((context, index) {
-          if (index < karyaList.length) {
-            Karya karya = karyaList[index];
-            return MyTile(
-              varKarya: karya,
-            );
-          }
-        }),
-      ),
+      body: karyaList.isEmpty
+          ? const Center(
+              child: Text(
+                'Belum ada karya!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            )
+          : GridView.custom(
+              gridDelegate: SliverQuiltedGridDelegate(
+                crossAxisCount: 4,
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                repeatPattern: QuiltedGridRepeatPattern.inverted,
+                pattern: [
+                  const QuiltedGridTile(2, 2),
+                  const QuiltedGridTile(2, 1),
+                  const QuiltedGridTile(2, 1),
+                ],
+              ),
+              childrenDelegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return MyTile(
+                    varKarya: karyaList[index],
+                  );
+                },
+                childCount: karyaList.length,
+              ),
+            ),
     );
   }
 }

@@ -22,14 +22,18 @@ class _SearchPageState extends State<SearchPage> {
   // update list setiap kali user menekan tombol search pada search bar
   void updateList(String value) {
     setState(() {
-      // menghilangkan no result
-      isShowUser = true;
+      if (searchController.text.isNotEmpty) {
+        // menghilangkan pesan "Kosong?!?"
+        isShowUser = true;
 
-      // ubah list yang ditampilkan
-      displayList = karyaList
-          .where((element) =>
-              element.title.toLowerCase().contains(value.toLowerCase()))
-          .toList();
+        // ubah list yang ditampilkan
+        displayList = karyaList
+            .where((element) =>
+                element.title.toLowerCase().contains(value.toLowerCase()))
+            .toList();
+      } else {
+        isShowUser = false;
+      }
     });
   }
 
@@ -37,6 +41,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -46,7 +51,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           controller: searchController,
           decoration: const InputDecoration(
-            labelText: 'Search for a user',
+            labelText: 'Cari user atau karya..',
             labelStyle: TextStyle(color: Colors.white),
           ),
           onFieldSubmitted: updateList,
@@ -54,7 +59,20 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: isShowUser
           ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: 32),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    'Pengguna',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
                 Expanded(
                   child: FutureBuilder(
                     future: FirebaseFirestore.instance
@@ -65,35 +83,53 @@ class _SearchPageState extends State<SearchPage> {
                         .orderBy('username')
                         .get(),
                     builder: (context, snapshot) {
-                      if (snapshot.hasData) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return const Center(
+                          child: Text('Terjadi sebuah kesalahan!'),
+                        );
+                      } else if (!snapshot.hasData ||
+                          snapshot.data!.docs.isEmpty) {
+                        return const Center(
+                          child: Text('Pengguna tidak ditemukan!',
+                              style: TextStyle(color: Colors.white)),
+                        );
+                      } else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
+                            final user = snapshot.data!.docs[index];
                             return ListTile(
                               leading: CircleAvatar(
                                 backgroundColor: Colors.grey.shade100,
                                 child: const Icon(Icons.person),
                               ),
                               title: Text(
-                                snapshot.data!.docs[index]['username'],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                                user['username'],
+                                style: const TextStyle(color: Colors.white),
                               ),
                             );
                           },
                         );
-                      } else if (snapshot.hasError) {
-                        return Center(
-                          child: Text('error: ${snapshot.error}'),
-                        );
                       }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
                     },
                   ),
                 ),
+                const SizedBox(height: 32),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    'Karya',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
                 Expanded(
                     child: GridView.custom(
                   gridDelegate: SliverQuiltedGridDelegate(
@@ -102,25 +138,25 @@ class _SearchPageState extends State<SearchPage> {
                     crossAxisSpacing: 0,
                     repeatPattern: QuiltedGridRepeatPattern.inverted,
                     pattern: [
-                      QuiltedGridTile(2, 2),
-                      QuiltedGridTile(2, 1),
-                      QuiltedGridTile(2, 1),
+                      const QuiltedGridTile(2, 2),
+                      const QuiltedGridTile(2, 1),
+                      const QuiltedGridTile(2, 1),
                     ],
                   ),
-                  childrenDelegate:
-                      SliverChildBuilderDelegate((context, index) {
-                    if (index < displayList.length) {
+                  childrenDelegate: SliverChildBuilderDelegate(
+                    (context, index) {
                       return MyTile(
                         varKarya: displayList[index],
                       );
-                    }
-                  }),
+                    },
+                    childCount: displayList.length,
+                  ),
                 ))
               ],
             )
           : Center(
               child: Text(
-                'No results',
+                'Kosong?!?',
                 style: TextStyle(color: Colors.grey.shade400),
               ),
             ),

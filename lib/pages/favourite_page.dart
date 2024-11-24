@@ -29,28 +29,39 @@ class _FavouritePageState extends State<FavouritePage> {
           'L I K E S',
           style: TextStyle(color: Colors.white),
         ),
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: GridView.custom(
-        gridDelegate: SliverQuiltedGridDelegate(
-          crossAxisCount: 4,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
-          repeatPattern: QuiltedGridRepeatPattern.inverted,
-          pattern: [
-            QuiltedGridTile(2, 2),
-            QuiltedGridTile(2, 1),
-            QuiltedGridTile(2, 1),
-          ],
-        ),
-        childrenDelegate: SliverChildBuilderDelegate((context, index) {
-          if (index < displayLikes.length) {
-            return MyTile(
-              varKarya: displayLikes[index],
-            );
-          }
-        }),
-      ),
+      body: displayLikes.isEmpty
+          ? const Center(
+              child: Text(
+                'You have no likes yet!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            )
+          : GridView.custom(
+              gridDelegate: SliverQuiltedGridDelegate(
+                crossAxisCount: 4,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                repeatPattern: QuiltedGridRepeatPattern.inverted,
+                pattern: [
+                  const QuiltedGridTile(2, 2),
+                  const QuiltedGridTile(2, 1),
+                  const QuiltedGridTile(2, 1),
+                ],
+              ),
+              childrenDelegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return MyTile(
+                    varKarya: displayLikes[index],
+                  );
+                },
+                childCount: displayLikes.length,
+              ),
+            ),
     );
   }
 }

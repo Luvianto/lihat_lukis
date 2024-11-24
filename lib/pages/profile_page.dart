@@ -25,14 +25,14 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.grey.shade900,
         title: Text(
           "Edit $field",
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         content: TextField(
           autofocus: true,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter new $field',
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
           ),
           onChanged: (value) {
             newValue = value;
@@ -40,14 +40,14 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               'Save',
               style: TextStyle(color: Colors.white),
             ),
@@ -57,8 +57,8 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
 
-    if (newValue.trim().length > 0) {
-      //only update if there is something on the field
+    if (newValue.trim().isNotEmpty) {
+      // only update if there is something on the field
       await usersCollection.doc(currentUser.email).update({field: newValue});
     }
   }
@@ -70,10 +70,10 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
         title: const Text(
-          'P R O F I L E',
+          'P R O F I L',
           style: TextStyle(color: Colors.white),
         ),
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(height: 50),
 
                 //profile pic
-                Icon(
+                const Icon(
                   Icons.person,
                   size: 72,
                   color: Colors.white,
@@ -101,16 +101,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(
                   currentUser.email!,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
 
                 const SizedBox(height: 50),
 
                 //user details
-                Padding(
-                  padding: const EdgeInsets.only(left: 25),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25),
                   child: Text(
-                    'My Details',
+                    'Biodata',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -118,14 +118,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 //username
                 MyTextBox(
                   text: userData['username'],
-                  sectionName: 'username',
+                  sectionName: 'Username',
                   onPressed: () => editField('username'),
                 ),
 
                 //bio
                 MyTextBox(
                   text: userData['bio'],
-                  sectionName: 'bio',
+                  sectionName: 'Bio',
                   onPressed: () => editField('bio'),
                 ),
 

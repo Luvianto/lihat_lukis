@@ -37,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pop(context);
 
       //display error
-      displayMessage("Password doesn't match!");
+      displayMessage("Konfirmasi Kata sandi tidak cocok!");
       return;
     }
 
@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
           .doc(userCredential.user!.email)
           .set({
         'username': emailTextController.text.split('@')[0],
-        'bio': 'Empty bio..', // initially empty bio
+        'bio': 'Kosong..', // initially empty bio
         // add any additional field as needed
       });
 
@@ -75,9 +75,57 @@ class _RegisterPageState extends State<RegisterPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(message),
+        title: Text(
+          message,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        content: Text(
+          formatErrorMessage(message),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
       ),
     );
+  }
+
+  String formatErrorMessage(String errorCode) {
+    switch (errorCode) {
+      case 'user-not-found':
+        return 'Pengguna dengan email ini tidak ditemukan. Silakan periksa kembali dan coba lagi.';
+      case 'wrong-password':
+        return 'Kata sandi salah. Silakan coba lagi.';
+      case 'invalid-credential':
+        return 'Silakan periksa kembali email atau kata sandi Anda.';
+      case 'email-already-in-use':
+        return 'Email ini sudah digunakan. Silakan gunakan email lain.';
+      case 'invalid-email':
+        return 'Alamat email tidak valid. Silakan masukkan email yang valid.';
+      case 'network-request-failed':
+        return 'Kesalahan jaringan. Periksa koneksi internet Anda.';
+      default:
+        return 'Terjadi kesalahan tak terduga. Silakan coba lagi nanti.';
+    }
   }
 
   @override
@@ -89,20 +137,19 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
                 //logo
-                const Icon(
-                  Icons.lock,
-                  size: 100,
+                const CircleAvatar(
+                  radius: 75,
+                  backgroundImage: AssetImage('lib/images/app_icon.png'),
                 ),
 
                 const SizedBox(height: 50),
 
                 //welcome back message
                 Text(
-                  'Lets create an account for you',
+                  'Buat Akun Anda Sekarang!',
                   style: TextStyle(
                     color: Colors.grey.shade700,
                   ),
@@ -121,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 MyTextField(
                   controller: passwordTextController,
-                  hintText: 'password',
+                  hintText: 'Kata sandi',
                   obscureText: true,
                 ),
 
@@ -129,40 +176,35 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 MyTextField(
                   controller: confirmPasswordTextController,
-                  hintText: 'Consfirm password',
+                  hintText: 'Konfirmasi Kata sandi',
                   obscureText: true,
                 ),
 
                 const SizedBox(height: 20),
 
                 //sign in button
-                MyButton(onTap: signUp, text: 'Sign Up'),
+                MyButton(onTap: signUp, text: 'DAFTAR'),
 
                 const SizedBox(height: 20),
 
                 // go to register page
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already a member?',
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                      ),
+                Text(
+                  'Sudah memiliki akun?',
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: widget.onTap,
+                  child: const Text(
+                    'Login sekarang',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
                     ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: const Text(
-                        'Login Now',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+                  ),
+                ),
               ],
             ),
           ),

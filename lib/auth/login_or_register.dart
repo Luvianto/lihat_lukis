@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//pages
+// Pages
 import 'package:lihat_lukis/pages/login_page.dart';
 import 'package:lihat_lukis/pages/register_page.dart';
 
@@ -22,10 +22,20 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
 
   @override
   Widget build(BuildContext context) {
-    if (showLoginPage) {
-      return LoginPage(onTap: togglePages);
-    } else {
-      return RegisterPage(onTap: togglePages);
-    }
+    return Scaffold(
+      body: Center(
+        child: AnimatedSwitcher(
+          duration:
+              const Duration(milliseconds: 300), // Duration of the transition
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            // You can use FadeTransition or SlideTransition for the animation
+            return FadeTransition(opacity: animation, child: child);
+          },
+          child: showLoginPage
+              ? LoginPage(onTap: togglePages)
+              : RegisterPage(onTap: togglePages),
+        ),
+      ),
+    );
   }
 }
