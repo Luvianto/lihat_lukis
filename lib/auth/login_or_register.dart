@@ -25,10 +25,8 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
     return Scaffold(
       body: Center(
         child: AnimatedSwitcher(
-          duration:
-              const Duration(milliseconds: 300), // Duration of the transition
+          duration: const Duration(milliseconds: 300),
           transitionBuilder: (Widget child, Animation<double> animation) {
-            // You can use FadeTransition or SlideTransition for the animation
             return FadeTransition(opacity: animation, child: child);
           },
           child: showLoginPage

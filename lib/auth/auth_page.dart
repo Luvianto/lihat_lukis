@@ -23,7 +23,7 @@ class AuthPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(
               child: Text(
-                'An error occurred. Please try again later.',
+                'Sebuah error terjadi, mohon coba lagi dalam beberapa saat.',
                 style: TextStyle(color: Colors.red, fontSize: 16),
               ),
             );
